@@ -10,7 +10,15 @@ public class SredMassiv {
 			i++;
 
 		}
-		float sred = (mass[0] + mass[9]) / 2;// calculation of average
-		System.out.println("average value=" + sred);
+		int n = 0;
+		float sred = 0;
+		while (n <= 9) {
+			sred = (sred + mass[n]);
+			n++;
+
+		}
+		float sred1 = sred / 10;// calculation of average
+
+		System.out.println("average value=" + sred1);
 	}
 }
