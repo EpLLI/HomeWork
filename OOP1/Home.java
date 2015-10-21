@@ -104,9 +104,9 @@ public class Home {
 		House[] foundHome3 = new House[4];
 		int i = 0;
 		Scanner n = new Scanner(System.in);
-		int kom = n.nextInt();
-		int etMin = n.nextInt();
-		int etMax = n.nextInt();
+		int kom = n.nextInt();// number of rooms
+		int etMin = n.nextInt();//number min floors
+		int etMax = n.nextInt();//number max floors
 		for (House house : houses) {
 
 			if ((house.getKolKom() == kom) && (house.getNomEt() > etMin) && (house.getNomEt() < etMax)) {
