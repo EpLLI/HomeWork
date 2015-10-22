@@ -2,7 +2,7 @@ package tipiMassiv;
 
 import java.util.Scanner;
 
-public class tipiMassiv {
+public class Zadanie3 {
 	public static void main(String[] args) {
 
 		int i = 0;

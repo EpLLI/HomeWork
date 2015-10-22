@@ -1,5 +1,5 @@
 
-public class MinIndex {
+public class Zadanie5 {
 
 	public static void main(String[] args) {
 		int m = 100;

@@ -1,5 +1,5 @@
 
-public class ForMinMax {
+public class Zadanie2 {
 
 	public static void main(String[] args) {
 		int m = 0;

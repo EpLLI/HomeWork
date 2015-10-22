@@ -1,5 +1,5 @@
 
-public class SredMassiv {
+public class Zadanie1 {
 
 	public static void main(String[] args) {
 		float mass[] = new float[10];// array initialization

@@ -1,5 +1,5 @@
 
-public class SummDo0 {
+public class Zadanie7 {
 
 	public static void main(String[] args) {
 		int m = 0;

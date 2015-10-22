@@ -1,5 +1,5 @@
 
-public class Diogonali {
+public class Zadanie10 {
 
 	public static void main(String[] args) {
 		int m = 5;

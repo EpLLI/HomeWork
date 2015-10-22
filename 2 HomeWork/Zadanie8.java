@@ -1,5 +1,5 @@
 
-public class YmnozenieDo0 {
+public class Zadanie8 {
 
 	public static void main(String[] args) {
 		int m = 1;
