@@ -62,6 +62,7 @@ public class Home {
 		House[] foundHome = new House[4];
 		int i = 0;
 		Scanner n = new Scanner(System.in);
+		System.out.println("Vvedite kolicestvo komnat");
 		int kom = n.nextInt();// number of rooms
 		for (House house : houses) {
 
@@ -87,6 +88,7 @@ public class Home {
 	public static House[] findHomeBySe(int se) {
 		House[] foundHome2 = new House[4];
 		int i = 0;
+		System.out.println("Vvedite ploscat kvartiri");
 		Scanner n = new Scanner(System.in);
 		int plo = n.nextInt();// Sets Square
 		for (House house : houses) {
@@ -103,10 +105,11 @@ public class Home {
 	public static House[] findHomeByNomKomNomEt(int nomKom, int nomEt) {
 		House[] foundHome3 = new House[4];
 		int i = 0;
+		System.out.println("Vvedite kolicestvo komnat i promezytok etazei");
 		Scanner n = new Scanner(System.in);
-		int kom = n.nextInt();// number of rooms
-		int etMin = n.nextInt();//number min floors
-		int etMax = n.nextInt();//number max floors
+		int kom = n.nextInt();
+		int etMin = n.nextInt();
+		int etMax = n.nextInt();
 		for (House house : houses) {
 
 			if ((house.getKolKom() == kom) && (house.getNomEt() > etMin) && (house.getNomEt() < etMax)) {
