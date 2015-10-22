@@ -1,18 +1,16 @@
 import java.util.Scanner;
 
-public class Faktor {
-
+public class Zadanie2z {
 	public static void main(String[] args) {
 		int n;
 
 		Scanner scan = new Scanner(System.in);
-		System.out.print("натуральное число n : ");
+		System.out.print("Natural number n : ");
 		n = scan.nextInt();
-		int result = 1;
-		for (int i = 2; i <= n; i++)
-			result = result * i;
+		double result = 0;
+		for (int i = 1; i <= n; i++)//cycle calculation
+			result = (result + (1d / i));
 		System.out.println(result);
-
 	}
 
 }

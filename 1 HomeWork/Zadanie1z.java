@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class FormulaDen {
+public class Zadanie1z {
 
 	public static void main(String[] args) {
 		int den, mes, god, stolet, denNed;
@@ -17,25 +17,25 @@ public class FormulaDen {
 		System.out.println(denNed);
 		switch (denNed) { // condition switch
 		case 1: // arguments
-			System.out.println("Понедельник");
+			System.out.println("Monday");
 			break;
 		case 2:
-			System.out.println("Вторник");
+			System.out.println("Tuesday");
 			break;
 		case 3:
-			System.out.println("Среда");
+			System.out.println("Wednesday");
 			break;
 		case 4:
-			System.out.println("Четверг");
+			System.out.println("Thursday");
 			break;
 		case 5:
-			System.out.println("Пятница");
+			System.out.println("Friday");
 			break;
 		case 6:
-			System.out.println("Субота");
+			System.out.println("Saturday");
 			break;
 		case 0:
-			System.out.println("Воскресение");
+			System.out.println("Sunday");
 			break;
 		}
 	}

@@ -1,5 +1,5 @@
 
-public class Formul {
+public class Zadanie6z {
 
 	public static void main(String[] args) {
 		double x, y = 0;
