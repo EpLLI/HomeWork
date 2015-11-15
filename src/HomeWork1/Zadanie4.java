@@ -1,3 +1,5 @@
+package HomeWork1;
+
 import java.util.Scanner;// инициализация ввода данных
 
 public class Zadanie4 {

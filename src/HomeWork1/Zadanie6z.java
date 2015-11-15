@@ -1,3 +1,5 @@
+package HomeWork1;
+
 
 public class Zadanie6z {
 
