@@ -24,11 +24,12 @@ import org.xml.sax.helpers.XMLReaderFactory;
 
 public class Parseri {
 	public static void main(String args[]) {
-		Scanner n = new Scanner(System.in);
-		int c = n.nextInt();
 		System.out.println("1 DOM");
 		System.out.println("2 Sax");
 		System.out.println("3 StAX");
+		Scanner n = new Scanner(System.in);
+		int c = n.nextInt();
+		
 		switch (c) {
 		case 1:
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -69,9 +70,8 @@ public class Parseri {
 			}
 			break;
 		case 3:
-			boolean isUrl = false;
 			boolean isName = false;
-			boolean isPass = false;
+			boolean isFac = false;
 			XMLInputFactory factory2 = XMLInputFactory.newFactory();
 			try {
 				XMLStreamReader reader = factory2.createXMLStreamReader(new FileInputStream("students.xml"));
@@ -82,14 +82,14 @@ public class Parseri {
 						if (reader.getLocalName().equals("lastName"))
 							isName = true;
 						else if (reader.getLocalName().equals("faculty"))
-							isPass = true;
+							isFac = true;
 					} else if (res == reader.CHARACTERS) {
 						if (isName) {
 							System.out.println("lastName:" + reader.getText());
 							isName = false;
-						} else if (isPass) {
+						} else if (isFac) {
 							System.out.println("faculty:" + reader.getText());
-							isPass = false;
+							isFac = false;
 						}
 					}
 				}

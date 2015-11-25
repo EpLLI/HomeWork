@@ -5,10 +5,10 @@ import java.util.concurrent.Executors;
 public class Ocered {
 
 	public static void main(String[] args) {
-		int counter = 1;
+		int c = 1;
 		ExecutorService kas = Executors.newFixedThreadPool(3);
 		for (int i = 0; i < 10; i++) {
-			Runnable kli = new Kli(counter++);
+			Runnable kli = new Kli(c++);
 			kas.execute(kli);
 		}
 		kas.shutdown();
