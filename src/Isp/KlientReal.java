@@ -1,13 +1,3 @@
-/**
- * Main Class
- * implements methods:
- * Search by id
- * calculation of the sum of the positive
- * calculation of the amount of negative
- * overall balance
- * sort by status
- * entry and output file
- */
 package Isp;
 
 import java.io.EOFException;
@@ -19,7 +9,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.Scanner;
+
+
 import Klient.Klient;
 import Scheta.Krediti;
 import Scheta.Vkladi;
@@ -27,7 +21,9 @@ import Scheta.Vkladi;
 public class KlientReal {
 	public static ArrayList<Krediti> kred;
 	public static ArrayList<Vkladi> vklad;
-
+	public static ResourceBundle rb;
+	public static Logger logger = Logger.getInstance();
+	
 	public static void main(String[] args) throws FileNotFoundException, IOException, ClassNotFoundException {
 		kred = genKredo();
 		vklad = genVklado();
@@ -35,28 +31,51 @@ public class KlientReal {
 		ArrayList<Vkladi> foundVkladi = null;
 
 		int id = 2900;
-		System.out.println("Pinkod");
+		System.out.println("Pinkod|Пинкод");
 		Scanner n = new Scanner(System.in);
 		int p = n.nextInt();// enter pincode
 		if (id == p) {// It is working in coincidence pincode
 
 			Klient kli = new Klient("Pupkin", 2900, "A001");// Klient data
 			System.out.println(kli);
+			System.out.println("Select language | Выберите язык");
+			System.out.println("1 = English  |  2 = Русский");
+
+			
+			
 			do {
-				System.out.println("Type selection ");// mennyu implementation
+				Scanner scanner = new Scanner(System.in);
+
+				Locale l;
+
+				while (true) {
+					String in = scanner.next();
+				
+					if (in.equalsIgnoreCase("1")) {
+						l = new Locale("en", "US");
+						logger.log( "User selected US locale");
+						break;
+					}
+					if (in.equalsIgnoreCase("2")) {
+						l = new Locale("ru", "RU");
+						logger.log( "User selected RU locale");
+						break;
+					}
+				}
+				rb = ResourceBundle.getBundle("I18N/strings", l);
+				System.out.println(rb.getString("Type"));// mennyu implementation
 				// methods
-				System.out.println("1 balans");
-				System.out.println("2 sort for stat");
-				System.out.println("3 id poisk");
-				System.out.println("4 vse sceta");
-				System.out.println("5 vivod kreditov iz faila");
-				System.out.println("9 vihod");
+				System.out.println(rb.getString("1_balans"));
+			
+				System.out.println(rb.getString("2_sort"));
+				System.out.println(rb.getString("3_id"));
+				System.out.println(rb.getString("4_vse"));
+				System.out.println(rb.getString("5_vivod"));
+				System.out.println(rb.getString("9_vihod"));
 				int c = n.nextInt();
 
 				if (foundKrediti != null)
 					printfoundKrediti(foundKrediti);
-				// if (foundVkladi != null)
-				// printfoundVkladi(foundVkladi);
 				switch (c) {// mennyu implementation methods
 				case 1:
 					System.out.println("Type selection ");
@@ -64,6 +83,7 @@ public class KlientReal {
 					System.out.println("2 Polozitelnii Balans");
 					System.out.println("3 Symarnii Balans");
 					int t = n.nextInt();
+					logger.log( "User selected balans");
 					switch (t) {
 					case 1:
 						foundKrediti = rascetOtricBalans();
@@ -84,6 +104,7 @@ public class KlientReal {
 					System.out.println("2 Razblokirovanie Vkladi ");
 					System.out.println("3 Zablokirovanie Krediti");
 					System.out.println("4 Razblokirovanie Krediti");
+					logger.log( "User selected sort");
 					int z = n.nextInt();
 					switch (z) {
 					case 1:
@@ -113,6 +134,7 @@ public class KlientReal {
 					System.out.println("1 Id poisk Krediti");
 					System.out.println("2 Id poisk Vkladi ");
 					int y = n.nextInt();
+					logger.log( "User selected poisk id");
 					switch (y) {
 
 					case 1:
@@ -129,6 +151,7 @@ public class KlientReal {
 					}
 					break;
 				case 4:
+					logger.log( "User selected vivod vseh kreditov");
 					System.out.println(kred);
 					System.out.println(vklad);
 					break;
@@ -139,18 +162,11 @@ public class KlientReal {
 					}
 
 					if (foundKrediti == null) {
-						System.out.println("Файл пуст");
+						System.out.println("net");
 					}
 					break;
-				/*
-				 * case 6: if (foundVkladi != null) {
-				 * 
-				 * foundVkladi = findVkladiByFile(); }
-				 * 
-				 * if (foundVkladi == null) { System.out.println("Файл пуст"); }
-				 * break;
-				 */
 				case 9:
+					logger.log( "User selected exit");
 					System.exit(0);
 					break;
 				default:
@@ -350,56 +366,39 @@ public class KlientReal {
 			}
 		}
 	}
-	/**
-	 * reading from file
-	 * @return
-	 */
+
 	public static ArrayList<Krediti> findKreditiByFile() {
 		ArrayList<Krediti> foundKrediti = new ArrayList<Krediti>();
 		try {
 			ObjectInputStream objIn = new ObjectInputStream(new FileInputStream("objects.dat"));
 			boolean check = true;
+			
 			while (check) {
 				try {
 					foundKrediti.add((Krediti) objIn.readObject());
 				} catch (EOFException ex) {
 					check = false;
+					logger.log( "Error");
 				}
 			}
 			objIn.close();
 		} catch (Exception e) {
 			e.printStackTrace();
+			logger.log( "Error");
 		}
 		return foundKrediti;
 	}
-	/**
-	 * write to a file
-	 */
+
 	public static void printfoundKrediti(ArrayList<Krediti> foundKrediti) throws IOException {
 		ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("objects.dat"));
 		for (Krediti s : foundKrediti) {
 			if (s != null) {
 				System.out.println(s.toString());
-				out.writeObject(s); // запись в файл
+				out.writeObject(s); 
 			}
 		}
 		out.close();
 		System.out.println("");
 	}
-	/**
-	 * public static ArrayList<Vkladi> findVkladiByFile() { ArrayList
-	 * <Vkladi> foundVkladi = new ArrayList<Vkladi>(); try { ObjectInputStream
-	 * objIn = new ObjectInputStream(new FileInputStream("objects1.dat"));
-	 * boolean check = true; while (check) { try { foundVkladi.add((Vkladi)
-	 * objIn.readObject()); } catch (EOFException ex) { check = false; } }
-	 * objIn.close(); } catch (Exception e) { e.printStackTrace(); } return
-	 * foundVkladi; }
-	 * 
-	 * public static void printfoundVkladi(ArrayList<Vkladi> foundVkladi) throws
-	 * IOException { ObjectOutputStream out = new ObjectOutputStream(new
-	 * FileOutputStream("objects1.dat")); for (Vkladi s : foundVkladi) { if (s
-	 * != null) { System.out.println(s.toString()); out.writeObject(s); //
-	 * запись в файл } } out.close(); System.out.println(""); }
-	 */
 
 }
