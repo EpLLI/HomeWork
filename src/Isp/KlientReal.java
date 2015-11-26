@@ -13,7 +13,6 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
-
 import Klient.Klient;
 import Scheta.Krediti;
 import Scheta.Vkladi;
@@ -23,7 +22,7 @@ public class KlientReal {
 	public static ArrayList<Vkladi> vklad;
 	public static ResourceBundle rb;
 	public static Logger logger = Logger.getInstance();
-	
+
 	public static void main(String[] args) throws FileNotFoundException, IOException, ClassNotFoundException {
 		kred = genKredo();
 		vklad = genVklado();
@@ -31,18 +30,16 @@ public class KlientReal {
 		ArrayList<Vkladi> foundVkladi = null;
 
 		int id = 2900;
-		System.out.println("Pinkod|œËÌÍÓ‰");
+		System.out.println("Pinkod|–ü–∏–Ω–∫–æ–¥");
 		Scanner n = new Scanner(System.in);
-		int p = n.nextInt();// enter pincode
+		int p = n.nextInt();// enter pincode –ø–∏–Ω–∫–æ–¥
 		if (id == p) {// It is working in coincidence pincode
 
 			Klient kli = new Klient("Pupkin", 2900, "A001");// Klient data
 			System.out.println(kli);
-			System.out.println("Select language | ¬˚·ÂËÚÂ ˇÁ˚Í");
-			System.out.println("1 = English  |  2 = –ÛÒÒÍËÈ");
+			System.out.println("Select language | –í—ã–±–µ—Ä–∏—Ç–µ —è–∑—ã–∫:");
+			System.out.println("1 = English  |  2 = –†—É—Å—Å–∫–∏–π");
 
-			
-			
 			do {
 				Scanner scanner = new Scanner(System.in);
 
@@ -50,23 +47,24 @@ public class KlientReal {
 
 				while (true) {
 					String in = scanner.next();
-				
+
 					if (in.equalsIgnoreCase("1")) {
 						l = new Locale("en", "US");
-						logger.log( "User selected US locale");
+						logger.log("User selected US locale");
 						break;
 					}
 					if (in.equalsIgnoreCase("2")) {
 						l = new Locale("ru", "RU");
-						logger.log( "User selected RU locale");
+						logger.log("User selected RU locale");
 						break;
 					}
 				}
-				rb = ResourceBundle.getBundle("I18N/strings", l);
-				System.out.println(rb.getString("Type"));// mennyu implementation
+				rb = ResourceBundle.getBundle("I18n/strings", l);
+				System.out.println(rb.getString("Type"));// mennyu
+															// implementation
 				// methods
 				System.out.println(rb.getString("1_balans"));
-			
+
 				System.out.println(rb.getString("2_sort"));
 				System.out.println(rb.getString("3_id"));
 				System.out.println(rb.getString("4_vse"));
@@ -83,7 +81,7 @@ public class KlientReal {
 					System.out.println("2 Polozitelnii Balans");
 					System.out.println("3 Symarnii Balans");
 					int t = n.nextInt();
-					logger.log( "User selected balans");
+					logger.log("User selected balans");
 					switch (t) {
 					case 1:
 						foundKrediti = rascetOtricBalans();
@@ -104,7 +102,7 @@ public class KlientReal {
 					System.out.println("2 Razblokirovanie Vkladi ");
 					System.out.println("3 Zablokirovanie Krediti");
 					System.out.println("4 Razblokirovanie Krediti");
-					logger.log( "User selected sort");
+					logger.log("User selected sort");
 					int z = n.nextInt();
 					switch (z) {
 					case 1:
@@ -134,7 +132,7 @@ public class KlientReal {
 					System.out.println("1 Id poisk Krediti");
 					System.out.println("2 Id poisk Vkladi ");
 					int y = n.nextInt();
-					logger.log( "User selected poisk id");
+					logger.log("User selected poisk id");
 					switch (y) {
 
 					case 1:
@@ -151,7 +149,7 @@ public class KlientReal {
 					}
 					break;
 				case 4:
-					logger.log( "User selected vivod vseh kreditov");
+					logger.log("User selected vivod vseh kreditov");
 					System.out.println(kred);
 					System.out.println(vklad);
 					break;
@@ -166,7 +164,7 @@ public class KlientReal {
 					}
 					break;
 				case 9:
-					logger.log( "User selected exit");
+					logger.log("User selected exit");
 					System.exit(0);
 					break;
 				default:
@@ -372,19 +370,19 @@ public class KlientReal {
 		try {
 			ObjectInputStream objIn = new ObjectInputStream(new FileInputStream("objects.dat"));
 			boolean check = true;
-			
+
 			while (check) {
 				try {
 					foundKrediti.add((Krediti) objIn.readObject());
 				} catch (EOFException ex) {
 					check = false;
-					logger.log( "Error");
+					logger.log("Error");
 				}
 			}
 			objIn.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.log( "Error");
+			logger.log("Error");
 		}
 		return foundKrediti;
 	}
@@ -394,7 +392,7 @@ public class KlientReal {
 		for (Krediti s : foundKrediti) {
 			if (s != null) {
 				System.out.println(s.toString());
-				out.writeObject(s); 
+				out.writeObject(s);
 			}
 		}
 		out.close();
