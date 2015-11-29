@@ -1,4 +1,5 @@
-package FactoriParser;
+package FactoriSingletonParser;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -20,70 +21,53 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 import org.xml.sax.helpers.XMLReaderFactory;
 
-enum ParsType {
-	DOM, SAX, StAX
-}
-
-public class FactoryPatternPars {
+public class FactorySingletonPatternPars {
 	public static void main(String[] args) {
-		System.out.println(ParsFactory.buildPars(ParsType.DOM));
-		System.out.println(ParsFactory.buildPars(ParsType.SAX));
-		System.out.println(ParsFactory.buildPars(ParsType.StAX));
+
+		ParseSingleton.factoryParse("DOM").construct();
+
+		ParseSingleton.factoryParse("SAX").construct();
+
+		ParseSingleton.factoryParse("StAX").construct();
 	}
 }
 
-abstract class Pars {
-	private ParsType Pars = null;
+interface Pars {
 
-	public Pars(ParsType Pars) {
-		this.Pars = Pars;
-		arrangeParts();
-	}
-
-	private void arrangeParts() {
-		// Do one time processing here
-	}
-
-	// Do subclass level processing in this method
-	protected abstract void construct();
-
-
+	void construct();
 
 }
 
-class ParsFactory {
-	public static Pars buildPars(ParsType Pars) {
-		Pars P = null;
-		switch (Pars) {
-		case DOM:
-			P = new DOMPars();
-			break;
+class ParseSingleton {
 
-		case SAX:
-			P = new SAXPars();
-			break;
+	public static ParseSingleton instance;
 
-		case StAX:
-			P = new StAXPars();
-			break;
+	private ParseSingleton() {
+	}
 
-		default:
-			// throw some exception
-			break;
+	public static ParseSingleton getInstance() {
+		if (instance == null) {
+			instance = new ParseSingleton();
 		}
-		return P;
+		return instance;
+	}
+
+	public static Pars factoryParse(String parserName) {
+		if (parserName.equals("DOM")) {
+			return new DOMPars();
+		} else if (parserName.equals("SAX")) {
+			return new SAXPars();
+		} else if (parserName.equals("StAX")) {
+			return new StAXPars();
+		}
+		return null;
 	}
 }
 
-class DOMPars extends Pars {
-
-	DOMPars() {
-		super(ParsType.DOM);
-		construct();
-	}
+class DOMPars implements Pars {
 
 	@Override
-	protected void construct() {
+	public void construct() {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = null;
 		Document doc = null;
@@ -110,15 +94,10 @@ class DOMPars extends Pars {
 	}
 }
 
-class SAXPars extends Pars {
-
-	SAXPars() {
-		super(ParsType.SAX);
-		construct();
-	}
+class SAXPars implements Pars {
 
 	@Override
-	protected void construct() {
+	public void construct() {
 		try {
 
 			XMLReader reader = XMLReaderFactory.createXMLReader();
@@ -126,22 +105,18 @@ class SAXPars extends Pars {
 			reader.setContentHandler(handler);
 			reader.parse("students.xml");
 		} catch (SAXException e) {
-			System.err.print("ошибка SAX парсера" + e);
+			System.err.print("SAX" + e);
 		} catch (IOException e) {
-			System.err.print("ошибка I/О потока " + e);
+			System.err.print(" I/ " + e);
 		}
 	}
+
 }
 
-class StAXPars extends Pars {
-
-	StAXPars() {
-		super(ParsType.StAX);
-		construct();
-	}
+class StAXPars implements Pars {
 
 	@Override
-	protected void construct() {
+	public void construct() {
 		boolean isName = false;
 		boolean isFac = false;
 		XMLInputFactory factory2 = XMLInputFactory.newFactory();
@@ -170,17 +145,17 @@ class StAXPars extends Pars {
 		}
 	}
 }
+
 class Sax extends DefaultHandler {
 
-@Override
-public void startDocument() {
+	@Override
+	public void startDocument() {
 		System.out.println("Parsing started");
 	}
 
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attrs) {
 		String s = localName;
-		// получение и вывод информации об атрибутах элемента
 		for (int i = 0; i < attrs.getLength(); i++) {
 			s += " " + attrs.getLocalName(i) + "=" + attrs.getValue(i);
 		}
